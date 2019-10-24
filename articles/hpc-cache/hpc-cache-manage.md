@@ -5,7 +5,7 @@ author: ekpgh
 ms.service: hpc-cache
 ms.topic: conceptual
 ms.date: 10/21/2019
-ms.author: 
+ms.author: rohogue
 ---
 
 # Manage your cache from the Azure portal
