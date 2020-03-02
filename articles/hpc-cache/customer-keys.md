@@ -1,0 +1,94 @@
+---
+title: Use customer-manged keys to encrypt data in Azure HPC Cache
+description: How to use Azure Key Vault with Azure HPC Cache to control encryption key access instead of using the default Microsoft-managed encryption keys
+author: ekpgh
+ms.service: hpc-cache
+ms.topic: conceptual
+ms.date: 03/02/2020
+ms.author: rohogue
+---
+
+# Use customer-managed encryption keys for Azure HPC Cache
+
+You can use Azure Key Vault to control ownership of the keys used to encrypt your data in Azure HPC Cache. This article explains how to use customer-managed keys to encrypt your data in the cache and in back-end Azure Blob storage.
+
+> [!NOTE]
+> All data stored in Azure is encrypted at rest with Microsoft-managed keys by default. You only need to follow the steps in this article if you want to manage the keys used to encrypt your data.
+
+These are the steps to enable customer-managed key encryption for Azure HPC Cache:
+
+1. Set up an Azure Key Vault to store the keys.
+1. When creating the Azure HPC Cache, turn on customer-managed key encryption and specify the key vault and key to use.
+1. After the cache is created, turn on key-vault-managed encryption from the cache.
+
+## 1. Set up Azure Key Vault
+
+Before you create the Azure HPC Cache, set up an Azure Key Vault system and import or create the key you want to use for the cache's encryption. An Azure Key Vault administrator must set up these resources.
+
+> [!NOTE]
+> The Azure Key Vault must share the same subscription and be in the same region as the Azure HPC Cache. Check the Azure Global Infrastructure [Products by region search page](https://azure.microsoft.com/global-infrastructure/services/?products=hpc-cache,key-vault) to make sure that both resources are available in the region you choose.
+
+Read the [Azure Key Vault documentation](../key-vault/key-vault-overview.md) for details.
+
+If creating a new key vault for Azure HPC Cache, use these settings:
+
+* **Subscription** - Use the same subscription that will be used for the cache.
+* **Region** - The key vault must be in the same region as the Azure HPC Cache.
+* **Pricing tier** - Standard is sufficient for use with Azure HPC Cache.
+* **Soft delete** - Azure HPC Cache will enable soft delete if it is not already configured on the key vault.
+* **Purge protection** - Azure HPC Cache will enable purge protection if it is not already active.
+* **Access policy** - Default settings are sufficient.
+* **Networking** - Azure HPC Cache must be able to access the key vault regardless of the endpoint settings you choose.
+
+**[ xxx - No AD setup needs? - xxx ]**
+
+## 2. Create the cache with customer-managed keys enabled
+
+**[ - xxx - does the user who creates the cache need to have specific privileges for the key vault? - xxx - ]**
+
+After you have prepared a key vault and key, create your Azure HPC Cache. Follow the instructions in [Create an Azure HPC Cache](hpc-cache-create.md), and specify the key vault and key in the **Disk encryption keys** page.
+
+1. Click the button to enable privately managed keys. After you change this setting, the key vault settings appear.
+
+1. Select a key vault from the list.
+
+   If your Azure Key Vault does not appear in the list, check these requirements:
+
+   * Is the cache in the same subscription as the key vault?
+   * Is the cache in the same region as the key vault?
+   * Does the user who is creating the cache have access to the key vault? **[ xxx - seems like this should be a requirement but I'm not sure - xxx ]**
+   * Is there network connectivity between the Azure portal and the key vault?
+
+1. After selecting a vault, select the individual key from the available options.
+
+1. Specify the version for the selected key. Learn more about versioning in the [Azure Key Vault documentation](../key-vault/about-keys-secrets-and-certificates.md#objects-identifiers-and-versioning).
+
+Continue with the rest of the specifications and create the cache as described in [Create an Azure HPC Cache](hpc-cache-create.md).
+
+## 3. Turn on Azure Key Vault encryption from the cache
+<!-- header linked from create article, update if changed -->
+
+After a few minutes, the new Azure HPC Cache appears in your Azure Portal. Go to the **Overview** page to authorize it to access your Azure Key Vault and enable customer-managed key encryption.
+
+A pop-up notification appears on the **Overview** page if encryption was configured during creation but has not yet been enabled from the cache. Click the **Yes** button to authorize the cache to use the encryption key. This action also enables soft-delete and purge protection on the key vault.
+
+![screenshot of cache overview page in portal, with a pop-up that asks the user to enable encryption by clicking yes](media/draft-enable-keyvault.png)
+
+This two-step process is necessary because the Azure HPC Cache instance needs an identity to pass to the Azure Key Vault for authorization. The cache identity doesn't exist until after its initial creation steps are complete.
+
+After the cache requests access to the key vault, it can create and encrypt the disks that store cached data. Azure HPC Cache also uses this key to encrypt data in any Azure Blob storage that you add as storage targets.
+
+After you authorize the encryption, Azure HPC Cache goes through several more minutes of setup to create the encrypted disks and related infrastructure.
+
+## Read more about customer-managed keys in Azure
+
+These articles explain more about using Azure Key Vault and customer-managed keys to encrypt data in Azure:
+
+* [Azure storage encryption overview](../storage/common/storage-service-encryption.md)
+* [Disk encryption with customer-managed keys](../virtual-machines/linux/disk-encryption.md#customer-managed-keys) - Documentation for using Azure Key Vault and managed disks, which is similar to the process used with Azure HPC Cache
+
+## Next steps
+
+After you have created the Azure HPC Cache and authorized Key Vault-based encryption, continue to set up your cache by giving it access to your data sources.
+
+* [Add storage targets](hpc-cache-add-storage.md)
