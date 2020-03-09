@@ -44,6 +44,8 @@
   items: 
   - name: Open a support ticket
     href: hpc-cache-support-ticket.md
+  - name: View snapshots for Blob starage targets
+    href: snapshots.md
   - name: Work around Blob storage account firewall settings
     href: hpc-cache-blob-firewall-fix.md
   - name: Troubleshoot NFS storage target creation
