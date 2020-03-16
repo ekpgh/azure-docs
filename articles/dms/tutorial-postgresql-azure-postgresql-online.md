@@ -3,8 +3,8 @@ title: "Tutorial: Migrate PostgreSQL to Azure Database for PostgreSQL online via
 titleSuffix: Azure Database Migration Service
 description: Learn to perform an online migration from PostgreSQL on-premises to Azure Database for PostgreSQL by using Azure Database Migration Service via the CLI.
 services: dms
-author: HJToland3
-ms.author: jtoland
+author: pochiraju
+ms.author: rajpo
 manager: craigg
 ms.reviewer: craigg
 ms.service: dms
@@ -28,7 +28,7 @@ In this tutorial, you learn how to:
 > * Monitor the migration.
 
 > [!NOTE]
-> Using Azure Database Migration Service to perform an online migration requires creating an instance based on the Premium pricing tier.
+> Using Azure Database Migration Service to perform an online migration requires creating an instance based on the Premium pricing tier. We encrypt disk to prevent data theft during the process of migration.
 
 > [!IMPORTANT]
 > For an optimal migration experience, Microsoft recommends creating an instance of Azure Database Migration Service in the same Azure region as the target database. Moving data across regions or geographies can slow down the migration process and introduce errors.
