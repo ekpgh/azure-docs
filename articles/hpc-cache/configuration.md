@@ -4,11 +4,11 @@ description: Explains how to configure additional settings for the cache like MT
 author: ekpgh
 ms.service: hpc-cache
 ms.topic: conceptual
-ms.date: 03/15/2020
+ms.date: 03/18/2020
 ms.author: rohogue
 ---
 
-## Configure additional Azure HPC Cache settings
+# Configure additional Azure HPC Cache settings
 
 The **Configuration** page in the Azure Portal has options for customizing several settings. Most users do not need to change these from the default values.
 
@@ -19,12 +19,14 @@ To see the settings, open the cache's **Configuration** page in the Azure portal
 ![screenshot of configuration page in Azure portal](media/draft-configuration.png)
 
 ## Adjust MTU value
+<!-- linked from troubleshoot-nas article -->
 
 You can select the maximum transmission unit size by using the drop-down menu labeled **MTU size**.
 
 The default value is 1500, but if your cache traffic uses a VPN you might need to change it to 1400 to work around packet size restrictions. Read [Adjust VPN packet size restrictions](troubleshoot-nas.md#adjust-vpn-packet-size-restrictions) in the NAS troubleshooting article to learn more.
 
 ## Configure root squash
+<!-- linked from troubleshoot -->
 
 The **Enable root squash** setting controls how the Azure HPC Cache allows root access. Root squash helps to prevent root-level access from unauthorized clients.
 
