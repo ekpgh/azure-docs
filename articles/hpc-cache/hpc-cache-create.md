@@ -62,7 +62,7 @@ You can skip this section if you do not need customer-managed keys. Azure encryp
 
 For a complete explanation of the customer-managed key encryption process, read [Use customer-managed encryption keys for Azure HPC Cache](customer-keys.md).
 
-![screenshot of encryption keys page with "customer managed" selected and key vault fields showing](media/draft-hpc-create-keyvault.png)
+![screenshot of encryption keys page with "customer managed" selected and key vault fields showing](media/draft-create-encryption.png)
 
 Select **Customer managed** to choose customer-managed key encryption. The key vault specification fields appear.<!-- double check --> Select the Azure Key Vault to use, then select the key and version to use for this cache. The key must be a 2048-bit RSA key. You can create a new key vault, key, or version from this page.
 <!-- + screenshot of key create/select page -->
