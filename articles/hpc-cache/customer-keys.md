@@ -41,7 +41,7 @@ Key vault properties:
 * **Region** - The key vault must be in the same region as the Azure HPC Cache.
 * **Pricing tier** - Standard tier is sufficient for use with Azure HPC Cache.
 * **Soft delete** - Azure HPC Cache will enable soft delete if it is not already configured on the key vault.
-* **Purge protection** - Azure HPC Cache will enable purge protection if it is not already active.
+* **Purge protection** - Purge protection must be enabled.
 * **Access policy** - Default settings are sufficient.
 * **Network connectivity** - Azure HPC Cache must be able to access the key vault regardless of the endpoint settings you choose.
 
@@ -107,7 +107,7 @@ The cache shows the status **Waiting for key**. Click the **Enable encryption** 
 
 ![screenshot of cache overview page in portal, with a banner message at the top that asks the user to enable encryption by clicking yes](media/draft-enable-keyvault.png)
 
-Click the **Yes** button to authorize the cache to use the encryption key. This action also enables soft-delete and purge protection on the key vault.
+Click the **Yes** button to authorize the cache to use the encryption key. This action also enables soft-delete and purge protection (if not already enabled) on the key vault.<!-- xxx problem? xxx -->
 
 ![screenshot of cache overview page in portal, with a banner message at the top that asks the user to enable encryption by clicking yes](media/draft-enable-keyvault-banner.png)
 
